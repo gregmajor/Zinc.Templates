@@ -1,0 +1,63 @@
+# 1. Each line is a file pattern followed by one or more owners.
+# 2. The order is important!
+# 3. The LAST matching pattern takes the highest precedence.
+# 4. You can use email addresses or GitHub user names such as @gregmajor
+
+# Backstop (if nobody else then...)
+* @YourGitHubOrganization/final-approvers
+
+# Chapter - DDD
+/src/*.Domain/ @YourGitHubOrganization/chapter-ddd
+
+# Chapter - Data
+/src/*.Data/ @YourGitHubOrganization/chapter-data
+*.sql @YourGitHubOrganization/chapter-data
+
+# Chapter - UI
+angular.json @YourGitHubOrganization/chapter-ui
+tsconfig.json @YourGitHubOrganization/chapter-ui
+tsconfig.*.json @YourGitHubOrganization/chapter-ui
+.eslintrc.js @YourGitHubOrganization/chapter-ui
+.eslintrc.json @YourGitHubOrganization/chapter-ui
+karma.conf.js @YourGitHubOrganization/chapter-ui
+.stylelintrc @YourGitHubOrganization/chapter-ui
+.npmignore @YourGitHubOrganization/chapter-ui
+
+# Chapter - UX
+*.css @YourGitHubOrganization/chapter-ux
+*.html @YourGitHubOrganization/chapter-ux
+*.sass @YourGitHubOrganization/chapter-ux
+*.scss @YourGitHubOrganization/chapter-ux
+/ClientApp @YourGitHubOrganization/chapter-ux
+
+# Chapter - DevOps
+.cicd/ @YourGitHubOrganization/chapter-devops
+.circleci/ @YourGitHubOrganization/chapter-devops
+.env @YourGitHubOrganization/chapter-devops
+.dockerignore @YourGitHubOrganization/chapter-devops
+Dockerfile @YourGitHubOrganization/chapter-devops
+docker-compose* @YourGitHubOrganization/chapter-devops
+*.sh @YourGitHubOrganization/chapter-devops
+*.ps1 @YourGitHubOrganization/chapter-devops
+/infrastructure/ @YourGitHubOrganization/chapter-infrastructure
+
+# Chapter - Architecture
+adr/ @YourGitHubOrganization/chapter-architecture
+.gitattributes @YourGitHubOrganization/chapter-architecture
+.gitignore @YourGitHubOrganization/chapter-architecture
+*.ruleset @YourGitHubOrganization/chapter-architecture
+CODEOWNERS @YourGitHubOrganization/chapter-architecture
+*.csproj @YourGitHubOrganization/chapter-architecture
+.editorconfig @YourGitHubOrganization/chapter-architecture
+Directory.Build.props @YourGitHubOrganization/chapter-architecture
+SonarLint.xml @YourGitHubOrganization/chapter-architecture
+stylecop.json @YourGitHubOrganization/chapter-architecture
+.codacy.yml @YourGitHubOrganization/chapter-architecture
+global.json @YourGitHubOrganization/chapter-architecture
+.dockerignore @YourGitHubOrganization/chapter-architecture
+
+# Chapter - Security
+AuditEvent.cs @YourGitHubOrganization/chapter-security
+A3/ @YourGitHubOrganization/chapter-security
+Behaviors/ @YourGitHubOrganization/chapter-security
+CorsPolicy.cs @YourGitHubOrganization/chapter-security

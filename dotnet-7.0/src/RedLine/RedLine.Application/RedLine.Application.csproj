@@ -1,0 +1,54 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RuntimeFrameworkVersion>6.0.0</RuntimeFrameworkVersion>
+    <RollForward>LatestMinor</RollForward>
+  </PropertyGroup>
+
+  <Target Name="CompileWasm" BeforeTargets="PrepareForBuild">
+    <Exec Command="opa build -t wasm -e authorization/entrypoint -o $(ProjectDir)/authorization.tar.gz $(ProjectDir)/A3/Authorization/authorization.rego" />
+    <Exec Command="tar -xzf $(ProjectDir)/authorization.tar.gz /policy.wasm" />
+    <Delete Files="$(ProjectDir)/authorization.tar.gz" />
+    <Move SourceFiles="policy.wasm" DestinationFiles="$(ProjectDir)/A3/Authorization/authorization.wasm" />
+
+    <ItemGroup>
+      <EmbeddedResource Include="$(ProjectDir)/A3/Authorization/authorization.wasm" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="CleanupWasm" AfterTargets="Build">
+    <Delete Files="$(ProjectDir)/A3/Authorization/authorization.wasm" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="App.Metrics" Version="4.3.0" />
+    <PackageReference Include="App.Metrics.Formatters.Prometheus" Version="4.3.0" />
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Ben.Demystifier" Version="0.4.1" />
+    <PackageReference Include="DOPA" Version="1.0.5" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="FluentValidation" Version="11.2.1" />
+    <PackageReference Include="IdentityModel" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="6.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="NServiceBus" Version="7.7.4" />
+    <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="2.4.0" />
+    <PackageReference Include="NServiceBus.Persistence.Sql" Version="6.5.1" />
+    <PackageReference Include="NServiceBus.RabbitMQ" Version="6.1.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.22.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RedLine.Data\RedLine.Data.csproj" />
+    <ProjectReference Include="..\RedLine.Domain\RedLine.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

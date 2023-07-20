@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RuntimeFrameworkVersion>6.0.0</RuntimeFrameworkVersion>
+    <RollForward>LatestMinor</RollForward>
+    <UserSecretsId>a4092156-8e19-43ce-93a8-ee082d32ee4c</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\RedLine\RedLine.Extensions.Hosting.Jobs\RedLine.Extensions.Hosting.Jobs.csproj" />
+    <ProjectReference Include="..\Zinc.Templates.Application\Zinc.Templates.Application.csproj" />
+  </ItemGroup>
+
+</Project>

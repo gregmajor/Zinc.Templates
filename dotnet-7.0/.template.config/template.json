@@ -1,0 +1,184 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "The RedLine Team",
+  "classifications": ["MicroService", "MicroApplication"],
+  "name": "RedLine microservice template for .NET Core.",
+  "identity": "RedLine.MicroServiceTemplate",
+  "groupIdentity": "RedLine.MicroServiceTemplate",
+  "shortName": "redline-app",
+  "tags": {
+    "language": "C#, TypeScript, Angular",
+    "type": "solution"
+  },
+  "sourceName": "Zinc.Templates",
+  "preferNameDirectory": true,
+  "SpecialCustomOperations": {
+    "**/*.yml": {
+      "Operations": [{
+        "type": "conditional",
+        "configuration": {
+          "style": "line",
+          "token": "#"
+        }
+      }]
+    }
+  },
+  "sources": [{
+    "source": "./",
+    "target": "./",
+    "exclude": [
+      "**/[Bb]in/**",
+      "**/[Oo]bj/**",
+      ".template.config/**/*",
+      "**/*.filelist",
+      "**/*.user",
+      "**/*.lock.json",
+      ".vs/**",
+      "**/node_modules/**",
+      "**/coverage/**",
+      ".git/**",
+      "**/dist/**",
+      "**/wwwroot/**",
+      "**Greeting**",
+      "*.tmp",
+      "**/.angular/**"
+    ]
+  }],
+  "symbols": {
+    "dottedShort": {
+      "type": "parameter",
+      "replaces": "Zn.Templates",
+      "fileRename": "Zn.Templates",
+      "description": "Short namespace root with symbol. Replaces Zn.Templates",
+      "forms": {
+        "global": ["identity", "withoutDots", "lowerCase", "dotsToDashesLowerCase", "dotsToUnderscoresLowerCase"]
+      },
+      "isRequired": true
+    },
+    "appPort": {
+      "type": "parameter",
+      "replaces": "5151",
+      "description": "The assigned application port (e.g., 5150).",
+      "isRequired": true,
+      "defaultValue": "5151",
+      "onlyIf": [{
+          "after": ":"
+        },
+        {
+          "after": "="
+        }
+      ]
+    },
+    "dbSchema": {
+      "type": "parameter",
+      "replaces": "app",
+      "description": "The application db schema name (e.g., products).",
+      "isRequired": true,
+      "defaultValue": "app",
+      "onlyIf": [{
+          "before": "\",",
+		  "after": "{ \""
+        }
+      ]
+    },
+    "jobsPort": {
+      "type": "parameter",
+      "replaces": "5161",
+      "description": "The assigned jobs port (e.g. 5160)",
+      "isRequired": true,
+      "defaultValue": "5161",
+      "onlyIf": [{
+          "after": ":"
+        },
+        {
+          "after": "="
+        }
+      ]
+    },
+    "messagingPort": {
+      "type": "parameter",
+      "replaces": "5171",
+      "description": "The assigned messaging port (e.g. 5170)",
+      "isRequired": true,
+      "defaultValue": "5171",
+      "onlyIf": [{
+          "after": ":"
+        },
+        {
+          "after": "="
+        }
+      ]
+    },
+    "dashedRenames": {
+      "type": "derived",
+      "valueSource": "dottedShort",
+      "valueTransform": "dotsToDashesLowerCase",
+      "fileRename": "zn-templates",
+      "replaces": "zn-templates"
+    },
+    "dottedRenames": {
+      "type": "derived",
+      "valueSource": "dottedShort",
+      "valueTransform": "lowerCase",
+      "fileRename": "zn.templates"
+    },
+    "dnsRenames": {
+      "type": "derived",
+      "valueSource": "name",
+      "valueTransform": "partAfterLastDotLowerCase",
+      "replaces": "stemplates"
+    }
+  },
+  "forms": {
+    "withoutDots": {
+      "identifier": "replace",
+      "pattern": "\\.",
+      "replacement": ""
+    },
+    "dotsToDashesLowerCase": {
+      "identifier": "chain",
+      "steps": ["lowerCase", "dotsToDashes"]
+    },
+    "dotsToDashes": {
+      "identifier": "replace",
+      "pattern": "\\.",
+      "replacement": "-"
+    },
+    "dotsToUnderscoresLowerCase": {
+      "identifier": "chain",
+      "steps": ["lowerCase", "dotsToUnderscores"]
+    },
+    "dotsToUnderscores": {
+      "identifier": "replace",
+      "pattern": "\\.",
+      "replacement": "_"
+    },
+    "partAfterLastDot": {
+      "identifier": "replace",
+      "pattern": "^[^.]+\\.",
+      "replacement": ""
+    },
+    "partAfterLastDotLowerCase": {
+      "identifier": "chain",
+      "steps": ["partAfterLastDot", "dotsToDashes", "lowerCase"]
+    }
+  },
+  "postActions": [{
+    "condition": "(OS != \"Windows_NT\")",
+    "description": "Make scripts executable",
+    "manualInstructions": [{
+      "text": "Run 'chmod +x set-execute-bits.sh || set-execute-bits.sh'"
+    }],
+    "actionId": "cb9a6cf3-4f5c-4860-b9d2-03a574959774",
+    "args": {
+      "+x": [
+        "./*.sh",
+        ".cicd/build/*.sh",
+        ".cicd/build/entrypoints/*.sh",
+        ".cicd/build/healthchecks/**/docker-healthcheck",
+        ".cicd/remote/certs/*.sh",
+      ]
+    },
+    "continueOnError": true
+  }]
+}

@@ -1,0 +1,15 @@
+exclude_paths:
+  - '.cicd/**'
+  - '.circleci/**'
+  - 'docs/**'
+  - '**/*.md'
+  - '.*'
+  - '*.md'
+  - '*.ps1'
+  - '*.sh'
+  - 'CODEOWNERS'
+  - 'tests/**'
+  - '.vscode/**'
+duplication:
+  exclude_paths:
+    - tests/*

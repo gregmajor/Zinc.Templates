@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Zinc.Templates.Host.Jobs": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "applicationUrl": "https://host.docker.internal:5161",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "APP_ENTRYPOINT": "Zinc.Templates.Host.Jobs"
+      }
+    }
+  }
+}

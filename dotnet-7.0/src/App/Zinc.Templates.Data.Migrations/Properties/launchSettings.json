@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "Zinc.Templates.Data.Migrations": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development",
+        "APP_ENTRYPOINT": "Zinc.Templates.Data.Migrations",
+        "ApplicationContext__ApplicationName": "Zinc.Templates",
+        "ApplicationContext__AuthenticationServicePublicKeyPath": "%RL_DOCKER_VOLS_ROOT%/in/certs/redline-public.crt",
+        "ApplicationContext__ServiceAccountPrivateKeyPath": "%RL_DOCKER_VOLS_ROOT%/in/certs/redline.pfx",
+        "ASPNETCORE_Kestrel__Certificates__Default__Path": "%RL_DOCKER_VOLS_ROOT%/in/certs/redline.pfx",
+        "Authentication__SigningCert__Path": "%RL_DOCKER_VOLS_ROOT%/in/certs/redline.pfx",
+        "Authentication__DataProtectionCert__Path": "%RL_DOCKER_VOLS_ROOT%/in/certs/redline.pfx",
+        "A3__Authentication__PublicKeyPath": "%RL_DOCKER_VOLS_ROOT%/in/certs/redline-public.crt"
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RuntimeFrameworkVersion>6.0.0</RuntimeFrameworkVersion>
+    <RollForward>LatestMinor</RollForward>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\RedLine\RedLine.Application\RedLine.Application.csproj" />
+    <ProjectReference Include="..\Zinc.Templates.Data\Zinc.Templates.Data.csproj" />
+    <ProjectReference Include="..\Zinc.Templates.Domain\Zinc.Templates.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Messages\" />
+    <Folder Include="Jobs\" />
+    <Folder Include="Notifications\" />
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
+</Project>

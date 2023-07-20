@@ -1,0 +1,86 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Migrations",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-migrations",
+            "program": "${workspaceFolder}/src/App/Zinc.Templates.Data.Migrations/bin/Debug/net6.0/Zinc.Templates.Data.Migrations.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/App/Zinc.Templates.Data.Migrations",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "console": "internalConsole"
+        },
+        {
+            "name": "Launch Web Host",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-web",
+            "program": "${workspaceFolder}/src/App/Zinc.Templates.Host.Web/bin/Debug/net6.0/Zinc.Templates.Host.Web.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/App/Zinc.Templates.Host.Web",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://+:5151"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": ".NET Core Docker Attach",
+            "type": "coreclr",
+            "request": "attach",
+            "preLaunchTask": "docker-compose-up",
+            "processId": 1,
+            "pipeTransport": {
+                "pipeProgram": "docker",
+                "pipeArgs": [ "exec", "-i", "zn-templates" ],
+                "debuggerPath": "/vsdbg/vsdbg",
+                "pipeCwd": "${workspaceRoot}",
+                "quoteArgs": false
+            },
+            "sourceFileMap": {
+                "/build": "${workspaceRoot}"
+            }
+        },
+        {
+            "name": "Launch Jobs Host",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-jobs",
+            "program": "${workspaceFolder}/src/App/Zinc.Templates.Host.Jobs/bin/Debug/net6.0/Zinc.Templates.Host.Jobs.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/App/Zinc.Templates.Host.Jobs",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://+:5161"
+            },
+            "console": "internalConsole"
+        },
+        {
+            "name": "Launch Messaging Host",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-messaging",
+            "program": "${workspaceFolder}/src/App/Zinc.Templates.Host.Messaging/bin/Debug/net6.0/Zinc.Templates.Host.Messaging.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/App/Zinc.Templates.Host.Messaging",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://+:5171"
+            },
+            "console": "internalConsole"
+        }
+    ]
+}

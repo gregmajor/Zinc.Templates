@@ -1,0 +1,31 @@
+<Project>
+
+    <Import Project="../Directory.Build.props" />
+
+    <!-- https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build?view=vs-2017 -->
+    <PropertyGroup>
+        <CodeAnalysisRuleSet>../../codeanalysis.tests.ruleset</CodeAnalysisRuleSet>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <WarningsAsErrors />
+    </PropertyGroup>
+
+    <!--<ItemGroup>
+        <AdditionalFiles Include="../../../stylecop.json" />
+    </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="../../../SonarLint.xml" />
+    </ItemGroup>-->
+
+
+    <PropertyGroup>
+        <DocumentationFile>.\$(MSBuildProjectName).xml</DocumentationFile>
+        <OutputPath />
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <NoWarn>1591</NoWarn>
+    </PropertyGroup>
+</Project>

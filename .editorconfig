@@ -1,0 +1,32 @@
+# Editor configuration, see https://editorconfig.org
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{js,yml,yaml,json,json.raw}]
+indent_size = 2
+
+[*.{py}]
+indent_size = 4
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
+
+[*.{cs}]
+# S1135: Track uses of "TODO" tags
+dotnet_diagnostic.S1135.severity = silent
+
+# S101: Types should be named in PascalCase
+dotnet_diagnostic.S101.severity = silent
+
+# S1939: Inheritance list should not be redundant
+dotnet_diagnostic.S1939.severity = silent
+
+# S2743: Static fields should not be used in generic types
+dotnet_diagnostic.S2743.severity = warning

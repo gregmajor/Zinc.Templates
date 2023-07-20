@@ -1,0 +1,1990 @@
+{
+  "summary": {
+    "title": "Distributed Authorization Threat Model",
+    "owner": "Jacob Krieg",
+    "description": "A map of threats focused on the implementation of applications using distributed authorization and its immediate ecosystem.",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "Tom Brown",
+        "$$hashKey": "object:11"
+      },
+      {
+        "name": "Albert Moneypenny",
+        "$$hashKey": "object:12"
+      }
+    ],
+    "diagrams": [
+      {
+        "title": "Main Request Data Flow",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "id": 0,
+        "diagramJson": {
+          "cells": [
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 20,
+                "y": 560
+              },
+              "angle": 0,
+              "id": "936557f9-22e2-4bac-bb70-0089c5c2fbe1",
+              "z": 2,
+              "isALog": true,
+              "threats": [
+                {
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "modelType": "STRIDE",
+                  "title": "Database Information Exposure",
+                  "type": "Information disclosure",
+                  "description": "Database connection needs to be encrypted to prevent information disclosure.\n\nDREAD Scale",
+                  "mitigation": "Databse connections are encrypted in distributed auth apps.\nDatabase is encrypted at rest.",
+                  "$$hashKey": "object:271"
+                }
+              ],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Database"
+                },
+                "#element-shape": {
+                  "class": ""
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 444,
+                "y": 307
+              },
+              "angle": 0,
+              "id": "bdd3e115-4b92-4020-90b7-c3351dba292b",
+              "z": 3,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Credentials should be encrypted",
+                  "type": "Information disclosure",
+                  "description": "Credentials and potentially sensitive data are stored in the parameter store. The parameter store is not an encrypted source of data.",
+                  "mitigation": "We need an encrypted solution for our configurations.",
+                  "$$hashKey": "object:321"
+                },
+                {
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "modelType": "STRIDE",
+                  "description": "AWS parameters are subject to change by any user who has access to the AWS account and is granted access to the parameter store. The application eco system is not responsible for protecting this third-party storage, but relies on it for centralizing and distributing our parameters across applications.",
+                  "title": "Reading parameters",
+                  "type": "Tampering",
+                  "mitigation": "Any user who has access to AWS parameters is granted access by an administrator. The administrator is responsible for granting and revoking access to this system. By design, the administrator has processes in place to ensure that there is minimum gap between the dismissal of a user from their responsibility and the revokation of the user's access to this system.",
+                  "$$hashKey": "object:315"
+                }
+              ],
+              "storesCredentials": true,
+              "hasOpenThreats": true,
+              "outOfScope": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "AWS Param Store"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 255,
+                "y": 620
+              },
+              "angle": 0,
+              "id": "3bb39db2-fc4c-40f1-880b-562cffa87de3",
+              "z": 3,
+              "threats": [
+                {
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "modelType": "STRIDE",
+                  "type": "Information disclosure",
+                  "title": "Connection is not Encrypted",
+                  "description": "Connection to cache is not encrypted in older implementations of our applications.",
+                  "mitigation": "Encrypt the connection. Newer apps will do this, but our older apps need to do the same until they are moved to the new app template.",
+                  "$$hashKey": "object:295"
+                }
+              ],
+              "storesCredentials": true,
+              "hasOpenThreats": false,
+              "outOfScope": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Grant Cache"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Store",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 666,
+                "y": 563
+              },
+              "angle": 0,
+              "id": "d2ecfbe5-7be3-47c5-8dff-860b38b0b98b",
+              "z": 3,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Communication is not encrypted",
+                  "type": "Information disclosure",
+                  "description": "The message queue does not have an encrypted tunnel. Messages sent to the queue and read from the queue are open text.\n\nProbability to happen:\nFixability:",
+                  "mitigation": "TLS on message queue",
+                  "$$hashKey": "object:370"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Tampering",
+                  "title": "Message queue has one set of credentials",
+                  "description": "Queue can be poisoned if a user gains credentials to the message queue. The message queue has one set of credentials and the access if wide open.\n\n\nIncludes: STRIDE",
+                  "mitigation": "Current: Controlled access to AWS\n\nImprovements: restricted credentials?",
+                  "$$hashKey": "object:376"
+                }
+              ],
+              "storesCredentials": true,
+              "hasOpenThreats": true,
+              "outOfScope": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Message Queue"
+                },
+                ".undefined": {
+                  "class": "undefinedhasOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 82,
+                "y": 275
+              },
+              "angle": 0,
+              "id": "0d9909ea-1398-4898-be81-cf1c808324dc",
+              "z": 6,
+              "privilegeLevel": "executionContext =Limited",
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "threats": [
+                {
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "modelType": "STRIDE",
+                  "type": "Elevation of privilege",
+                  "title": "Authorization code changes to retrofit service functionality",
+                  "description": "Scenario: Before 5.0, we introduced a security vulnerability to allow service accounts to communicate between applications.\n\nConsequence: We introduced a security vulnerability that compromizes authorization for service accounts.\n\nTODO: Dangling Grants (Will knows). This is an edge case where an operation changes names between releases resulting in either a denial of service or elevated permissions depending on the scenario.\n\nIssues include: Token Swapping, ..., Inadvertant code changes are still present.",
+                  "mitigation": "5.0 Template: All service calls have authorization, all apps have a service account.\n\nPossible improvement: Authorization specific code owners.\n\nTODO: If there is a mismatch, there should be a exception for dangling grants.",
+                  "$$hashKey": "object:197"
+                }
+              ],
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "App with\nDistributed\nAuth"
+                },
+                "#element-process": {
+                  "class": "outOfScopeElement"
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Actor",
+              "size": {
+                "width": 160,
+                "height": 80
+              },
+              "position": {
+                "x": 20,
+                "y": 20
+              },
+              "angle": 0,
+              "id": "b394f9f7-07ca-42bc-b616-ad77c6fbfcce",
+              "z": 7,
+              "threats": [],
+              "outOfScope": false,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Browser"
+                },
+                "#element-shape": {
+                  "class": ""
+                },
+                ".undefined": {
+                  "class": "undefinedhasNoOpenThreats isInScope"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 453,
+                "y": 20
+              },
+              "angle": 0,
+              "id": "a6160e9a-90b8-47cb-bdae-de1771535eb5",
+              "z": 25,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Krypton.Admini\nstration"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 1055,
+                "y": 138
+              },
+              "angle": 0,
+              "id": "5f004968-1ad3-42d6-8f11-577173ce38da",
+              "z": 26,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "modelType": "STRIDE",
+                  "type": "Elevation of privilege",
+                  "title": "Activity Group - Add Activity/Remove Activity",
+                  "description": "Scenario: The administrator is granted the ability to add activities or remove activities from an activity group. The administrator is not granted the ability to add or revoke grants to a user activities for an application.\n\nConsequence: Adding the activity to an activity group grants that activity to everyone in that group. Thereby granting an activity to users. Technically, this can give the user a work-around to elevate their own privilage as well.",
+                  "mitigation": "The user is an administrator. At this time, we do not have a notion of application specific administrators. Therefore, we are not in immediate danger, but it is something we want to address.\n\nOptions:\n* Prevent the admin from changing activities in a group if they are associated to that group.\n* Secondary approval on adding/removing activities to a group when the admin is associated.",
+                  "$$hashKey": "object:60"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "modelType": "STRIDE",
+                  "type": "Elevation of privilege",
+                  "title": "Activity Groups Have No Tenant",
+                  "description": "Scenario: An adminstrator who has privileage to remove an activity group can remove the activity group by designed; however, activity groups do not have tenants. If the administrator removes the activity group with a particular tenant in mind, it affects any other tenant using that activity group.\n\nConsequence: Removing an activity group can cause a rippling effect on any tenant using that group.\n\nIncludes: Information disclosure, Tampering",
+                  "mitigation": "Administrators today are system administrators and not application or tenant specific administrators. Groups are currently designed to be supported as system based groups; however, we should address this by adding a tenant before this becomes an issue with other users who administer their own tenants.",
+                  "$$hashKey": "object:548"
+                }
+              ],
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Krypton.AuthZ\n(Activity\nGroups)"
+                },
+                ".element-text": {
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 649,
+                "y": 182
+              },
+              "angle": 0,
+              "id": "4557f6f4-6c72-485d-9a20-3c1d219aa419",
+              "z": 27,
+              "hasOpenThreats": false,
+              "outOfScope": true,
+              "reasonOutOfScope": "This all existing apps in 3.0 and 5.0 that we have not converted to the distributed authorization model. As such, any existing problems need to be addressed in another model.",
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isOutOfScope"
+                },
+                "text": {
+                  "text": "App Without\nDistributed\nAuth"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "bdd3e115-4b92-4020-90b7-c3351dba292b"
+              },
+              "target": {
+                "id": "0d9909ea-1398-4898-be81-cf1c808324dc"
+              },
+              "vertices": [],
+              "id": "ece23b2d-4a4c-4899-a431-692dfc0a40d2",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Read app config",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 41,
+              "hasOpenThreats": false,
+              "threats": [],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "bdd3e115-4b92-4020-90b7-c3351dba292b"
+              },
+              "target": {
+                "id": "a6160e9a-90b8-47cb-bdae-de1771535eb5"
+              },
+              "vertices": [],
+              "id": "84e46f99-59e4-4b1a-a364-b9cdd0e6e505",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Read app config",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 42,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "bdd3e115-4b92-4020-90b7-c3351dba292b"
+              },
+              "target": {
+                "id": "5f004968-1ad3-42d6-8f11-577173ce38da"
+              },
+              "vertices": [
+                {
+                  "x": 778,
+                  "y": 338
+                }
+              ],
+              "id": "2d1102dd-298b-4388-aec4-596519ce510e",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.491037331182788,
+                    "offset": -1.060433555312382
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Read app config",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 43,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "bdd3e115-4b92-4020-90b7-c3351dba292b"
+              },
+              "target": {
+                "id": "4557f6f4-6c72-485d-9a20-3c1d219aa419"
+              },
+              "vertices": [
+                {
+                  "x": 656,
+                  "y": 334
+                }
+              ],
+              "id": "11150a9a-4043-437e-a72f-0553ee2dd24d",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.659272198843287,
+                    "offset": 18.6894858220103
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Read app config",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 44,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "0d9909ea-1398-4898-be81-cf1c808324dc"
+              },
+              "target": {
+                "id": "a6160e9a-90b8-47cb-bdae-de1771535eb5"
+              },
+              "vertices": [
+                {
+                  "x": 140,
+                  "y": 275
+                },
+                {
+                  "x": 230,
+                  "y": 210
+                }
+              ],
+              "id": "9be524de-4bc8-436d-bc1c-2411a1029aa0",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "List of activities",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 45,
+              "hasOpenThreats": false,
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Activity names exposed",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Low",
+                  "description": "Any authenticated user can access the collection of activity names that an application responds to through a well known endpoint.",
+                  "mitigation": "This is by design and an acceptable risk as determined at the time of development. Alone, this information is not an attack vector, but it is informative as to which activities can be added to a user's grants.",
+                  "$$hashKey": "object:361"
+                },
+                {
+                  "status": "Mitigated",
+                  "severity": "Low",
+                  "modelType": "STRIDE",
+                  "title": "Open well-known endpoint.",
+                  "type": "Denial of service",
+                  "description": "Because this is an endpoint exposed to the web, anyone can access it without authentication. The endpoint calls in-memory data and returns it, which is a full service request and response. Not a static page.",
+                  "mitigation": "This is a limitation of the fabric of a web service. There are no other resources being used in this request besides memory. The rate of response is dependent on memory read. Further, applications horizontally scale, and this is static data in memory.",
+                  "$$hashKey": "object:591"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "5f004968-1ad3-42d6-8f11-577173ce38da"
+              },
+              "target": {
+                "id": "a6160e9a-90b8-47cb-bdae-de1771535eb5"
+              },
+              "vertices": [
+                {
+                  "x": 842,
+                  "y": 50
+                }
+              ],
+              "id": "184d6c04-596f-44b2-9f24-f16707a8655b",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.36788893705726194,
+                    "offset": -15.285425744030713
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Get list of\nnon-distributed\nactivities",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Activity names exposed",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Low",
+                  "description": "Any authenticated user can access the collection of activity names that an application responds to through a well known endpoint.",
+                  "mitigation": "This is by design and an acceptable risk as determined at the time of development. Alone, this information is not an attack vector, but it is informative as to which activities can be added to a user's grants.",
+                  "$$hashKey": "object:361"
+                }
+              ],
+              "z": 46,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "5f004968-1ad3-42d6-8f11-577173ce38da"
+              },
+              "target": {
+                "id": "4557f6f4-6c72-485d-9a20-3c1d219aa419"
+              },
+              "vertices": [],
+              "id": "554d2b46-4211-4e9b-8b39-ed1687eef110",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.5467252314113002,
+                    "offset": -8.492759635047092
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Get Activity Grants\nfor user X",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 47,
+              "hasOpenThreats": false,
+              "description": "",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 80,
+                "y": 310
+              },
+              "target": {
+                "id": "b394f9f7-07ca-42bc-b616-ad77c6fbfcce"
+              },
+              "vertices": [
+                {
+                  "x": 60,
+                  "y": 170
+                }
+              ],
+              "id": "8072d7bd-3aff-4b9c-a6bf-c1b7325fd00c",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Request/Response",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Data returning to a browser can be manipulated by a third party",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "Any browser with add-ons is subject to data theft. LIkewise, any browser out of date can be exposed to various attacks resulting in data theft. This includes JWT tokens. This is out of our control.",
+                  "mitigation": "Have tokens expire frequently with renewal.\nThe user log in periodically with two factor authentication.",
+                  "$$hashKey": "object:613"
+                }
+              ],
+              "z": 48,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 179,
+                "y": 296
+              },
+              "target": {
+                "id": "a6160e9a-90b8-47cb-bdae-de1771535eb5"
+              },
+              "vertices": [
+                {
+                  "x": 381,
+                  "y": 178
+                }
+              ],
+              "id": "8ec6efd6-d3df-4b86-b213-0e2f6ba37d84",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "List of grants by user",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 49,
+              "hasOpenThreats": false,
+              "threats": [
+                {
+                  "status": "Mitigated",
+                  "severity": "Low",
+                  "modelType": "STRIDE",
+                  "type": "Information disclosure",
+                  "title": "Reading a user's grants",
+                  "description": "If the authorized user is spoofed, the bad actor could gain access to someone's grant information.",
+                  "mitigation": "In order to spoof someone's authorization, they would need access to that account's credentials, or JWT. This is a 3rd party service that we depend on, and therefore the threat is not direct. The threat would be a failing on our authentication provider.",
+                  "$$hashKey": "object:384"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "a6160e9a-90b8-47cb-bdae-de1771535eb5"
+              },
+              "target": {
+                "id": "0d9909ea-1398-4898-be81-cf1c808324dc"
+              },
+              "vertices": [
+                {
+                  "x": 350,
+                  "y": 257
+                }
+              ],
+              "id": "29cf6234-0600-4389-9a0e-081e4d1a9bc8",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Add grants",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 51,
+              "hasOpenThreats": false,
+              "threats": [
+                {
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "modelType": "STRIDE",
+                  "type": "Elevation of privilege",
+                  "title": "A user can be granted too many permissions",
+                  "description": "An administrator will not know the operations of all of the activities immediately without training or extensive reading of each activity.",
+                  "mitigation": "Activities have descriptions (e.g. read the activity).\nThe administrators are trained on activities (on boarding and new activities).\nKnowledgable users are creating these activity groups.\nActivities are listed with other associated groups.",
+                  "$$hashKey": "object:439"
+                },
+                {
+                  "status": "Mitigated",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "type": "Elevation of privilege",
+                  "title": "A user granting an activity to themselves",
+                  "description": "Scenario: A user has the ability to display their own grants. The user can attempt to grant themselves additional activities.",
+                  "mitigation": "The application using distributed authorization should not permit the user to granting an activity to the same user.",
+                  "$$hashKey": "object:422"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "a6160e9a-90b8-47cb-bdae-de1771535eb5"
+              },
+              "target": {
+                "id": "b394f9f7-07ca-42bc-b616-ad77c6fbfcce"
+              },
+              "vertices": [],
+              "id": "e0e9b4d9-a1d6-49ab-967f-744939e2e40a",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.4702323720983959,
+                    "offset": 0.5586913700400677
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Request/Response",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 53,
+              "hasOpenThreats": false,
+              "isPublicNetwork": true,
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Data returning to a browser can be manipulated by a third party",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "Any browser with add-ons is subject to data theft. LIkewise, any browser out of date can be exposed to various attacks resulting in data theft. This includes JWT tokens. This is out of our control.",
+                  "mitigation": "Have tokens expire frequently with renewal.\nThe user log in periodically with two factor authentication.",
+                  "$$hashKey": "object:613"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "3bb39db2-fc4c-40f1-880b-562cffa87de3"
+              },
+              "target": {
+                "id": "0d9909ea-1398-4898-be81-cf1c808324dc"
+              },
+              "vertices": [
+                {
+                  "x": 204,
+                  "y": 477
+                }
+              ],
+              "id": "4b01401f-7039-4e54-a6fa-5e1e87aab5ab",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.35088489935373246,
+                    "offset": 1.7564117048001249
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Read Grants",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 55,
+              "hasOpenThreats": false,
+              "description": "Activity grants read from cache",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "936557f9-22e2-4bac-bb70-0089c5c2fbe1"
+              },
+              "target": {
+                "id": "0d9909ea-1398-4898-be81-cf1c808324dc"
+              },
+              "vertices": [
+                {
+                  "x": 71,
+                  "y": 471
+                }
+              ],
+              "id": "ecbde7a0-21ee-432e-96b2-b1043f5d4b96",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Read Grants",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 56,
+              "hasOpenThreats": false,
+              "description": "Activity grants read from the database",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 169,
+                "y": 382
+              },
+              "target": {
+                "id": "3bb39db2-fc4c-40f1-880b-562cffa87de3"
+              },
+              "vertices": [
+                {
+                  "x": 270,
+                  "y": 464
+                }
+              ],
+              "id": "0bd5dd09-dc21-4791-9df0-7574e3ffaacf",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Store Grants",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 57,
+              "hasOpenThreats": false,
+              "description": "Storing grants when read from the database. This overwrites older stored grants.",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "0d9909ea-1398-4898-be81-cf1c808324dc"
+              },
+              "target": {
+                "id": "936557f9-22e2-4bac-bb70-0089c5c2fbe1"
+              },
+              "vertices": [
+                {
+                  "x": 151,
+                  "y": 496
+                }
+              ],
+              "id": "f023b10c-2866-4aeb-92ea-29ca74094778",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Write Grants",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 58,
+              "hasOpenThreats": false,
+              "description": "* Writes on Activity Group changes\n  * ActivityGroupAdded\n  * ActivityGroupRemoved\n  * ActivityGroupActivityAdded\n* ActivityGroupActivityRemoved\n* ActivityGroupUserGranted\n* ActivityGroupUserRevoked",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "5f004968-1ad3-42d6-8f11-577173ce38da"
+              },
+              "target": {
+                "id": "d2ecfbe5-7be3-47c5-8dff-860b38b0b98b"
+              },
+              "vertices": [
+                {
+                  "x": 903,
+                  "y": 451
+                }
+              ],
+              "id": "a5e67bbf-b736-484b-a371-97544fa5fb05",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.5983012939007466,
+                    "offset": -10.99424830491825
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "ActivityGroup Events",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 59,
+              "hasOpenThreats": false,
+              "description": "*ActivityGroupActivityAdded\n*ActivityGroupRemoved\n*ActivityGroupUserGranted\n*ActivityGroupUserRevoked",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "d2ecfbe5-7be3-47c5-8dff-860b38b0b98b"
+              },
+              "target": {
+                "id": "0d9909ea-1398-4898-be81-cf1c808324dc"
+              },
+              "vertices": [
+                {
+                  "x": 352,
+                  "y": 491
+                }
+              ],
+              "id": "7b427265-1417-4855-b839-5d7438ca3586",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Subscribing to\nActivityGroupEvents",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 60,
+              "hasOpenThreats": false,
+              "description": "*ActivityGroupActivityAdded\n*ActivityGroupRemoved\n*ActivityGroupUserGranted\n*ActivityGroupUserRevoked",
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 1,
+                "y": 126
+              },
+              "target": {
+                "x": 248,
+                "y": 11
+              },
+              "vertices": [
+                {
+                  "x": 172,
+                  "y": 117
+                }
+              ],
+              "id": "4fecaa13-8195-499a-a3a7-813ff76c0689",
+              "z": 61,
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Web Boundary",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "attrs": {}
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "5f004968-1ad3-42d6-8f11-577173ce38da"
+              },
+              "target": {
+                "id": "0d9909ea-1398-4898-be81-cf1c808324dc"
+              },
+              "vertices": [
+                {
+                  "x": 784,
+                  "y": 451
+                }
+              ],
+              "id": "5fe6640b-eec6-42e2-9936-e01202c97b3a",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.46498229451920453,
+                    "offset": -11.52098689556641
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Collect activity group\ngrants to associate\nusers to activity\ngrants",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 63,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Low",
+                  "modelType": "STRIDE",
+                  "description": "Endpoint is tenant-less for querying activity groups from Krypton.Authorization. This is know and currently by design.",
+                  "mitigation": "The user (service user) needs wildcard access on the tenant level to use this endpoint.\n\nActivity grants for this endpoint are only added by migration. The activity itself is not added to the application (the visible list of activities in AuthZ).",
+                  "title": "Endpoint returns cross-tenant data when collecting activity groups.",
+                  "type": "Information disclosure",
+                  "$$hashKey": "object:415"
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "modelType": "STRIDE",
+                  "title": "Continuous modifications of activity groups",
+                  "type": "Denial of service",
+                  "description": "As it stands now, continually modifying an activity group or granting/revoking a user an activity group can cause heavier traffic. If the traffic gets too heavy, we end up in DoS.",
+                  "mitigation": "Trusted administrators will be responsible with the operations.\n\nImprovements:\n- Rate limit the query calls.\n- Respond to discrete events with CRDTs.\netc.",
+                  "$$hashKey": "object:421"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "5f004968-1ad3-42d6-8f11-577173ce38da"
+              },
+              "target": {
+                "id": "a6160e9a-90b8-47cb-bdae-de1771535eb5"
+              },
+              "vertices": [
+                {
+                  "x": 1035,
+                  "y": 87
+                },
+                {
+                  "x": 854,
+                  "y": 20
+                }
+              ],
+              "id": "55a98351-7382-4287-9fd1-286cfa57b404",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.636019919946455,
+                    "offset": 1.3652131610074685
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Get list of activity\ngroups",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Activity names exposed",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Low",
+                  "description": "Any authenticated user can access the collection of activity names that an application responds to through a well known endpoint.",
+                  "mitigation": "This is by design and an acceptable risk as determined at the time of development. Alone, this information is not an attack vector, but it is informative as to which activities can be added to a user's grants.",
+                  "$$hashKey": "object:361"
+                }
+              ],
+              "z": 64,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "5f004968-1ad3-42d6-8f11-577173ce38da"
+              },
+              "target": {
+                "id": "a6160e9a-90b8-47cb-bdae-de1771535eb5"
+              },
+              "vertices": [
+                {
+                  "x": 775,
+                  "y": 87
+                }
+              ],
+              "id": "01a5022c-2064-41e4-a22b-9ec723d574ae",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.7696958107655103,
+                    "offset": 7.594625270301108
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Get User Grants",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 65,
+              "hasOpenThreats": false,
+              "description": "Includes activity groups and activities granted to the user.",
+              "threats": [
+                {
+                  "status": "Mitigated",
+                  "severity": "Low",
+                  "modelType": "STRIDE",
+                  "type": "Information disclosure",
+                  "title": "User grants are exposed here.",
+                  "description": "If a user is given elevated privelages, the user's grants are accessible. If the user can be spoofed, the application that user has access to will have information that other users would not (e.g. PII).",
+                  "mitigation": "Okta token validation, administrative privelages (as mentioned in description) and would require additional spoofing.",
+                  "$$hashKey": "object:507"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "a6160e9a-90b8-47cb-bdae-de1771535eb5"
+              },
+              "target": {
+                "id": "5f004968-1ad3-42d6-8f11-577173ce38da"
+              },
+              "vertices": [
+                {
+                  "x": 872,
+                  "y": 136
+                }
+              ],
+              "id": "5ed08d97-90ea-41d0-822a-7c1c76c160be",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.5231869812636569,
+                    "offset": -2.492047000117354
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Grant user activity\ngroup",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 66,
+              "hasOpenThreats": false,
+              "threats": [
+                {
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "modelType": "STRIDE",
+                  "type": "Elevation of privilege",
+                  "title": "Grant the wrong group to a user",
+                  "description": "Granting the wrong user an activity group results in elevated privilages.",
+                  "mitigation": "Train administrators.",
+                  "$$hashKey": "object:485"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 604,
+                "y": 678
+              },
+              "target": {
+                "x": 906,
+                "y": 669
+              },
+              "vertices": [
+                {
+                  "x": 617,
+                  "y": 520
+                },
+                {
+                  "x": 696,
+                  "y": 500
+                },
+                {
+                  "x": 834,
+                  "y": 522
+                }
+              ],
+              "id": "426afe69-b761-4359-beac-c14fe75f23d3",
+              "z": 67,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 18,
+                "y": 574
+              },
+              "target": {
+                "x": 205,
+                "y": 574
+              },
+              "id": "0ef2e959-d954-431c-9f18-71e70e5599cf",
+              "z": 67,
+              "vertices": [
+                {
+                  "x": 46,
+                  "y": 511
+                },
+                {
+                  "x": 176,
+                  "y": 501
+                }
+              ],
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 216,
+                "y": 162
+              },
+              "target": {
+                "x": 457,
+                "y": 233
+              },
+              "vertices": [
+                {
+                  "x": 387,
+                  "y": 154
+                }
+              ],
+              "id": "eea520cb-f1af-44b3-8f4c-07d338b87502",
+              "z": 68,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 867,
+                "y": 1
+              },
+              "target": {
+                "x": 664,
+                "y": 143
+              },
+              "vertices": [],
+              "id": "f85c4d8e-d6ee-4419-b09c-a580269cd939",
+              "z": 69,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 411,
+                "y": 380
+              },
+              "target": {
+                "x": 658,
+                "y": 405
+              },
+              "vertices": [
+                {
+                  "x": 444,
+                  "y": 289
+                },
+                {
+                  "x": 562,
+                  "y": 255
+                }
+              ],
+              "id": "cebaf13d-5e95-4cdc-940a-cf7a4ed31b88",
+              "z": 70,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 237,
+                "y": 730
+              },
+              "target": {
+                "x": 428,
+                "y": 722
+              },
+              "vertices": [
+                {
+                  "x": 241,
+                  "y": 595
+                },
+                {
+                  "x": 421,
+                  "y": 607
+                }
+              ],
+              "id": "d1edd53d-bc01-41e8-ab95-76e1c1944618",
+              "z": 71,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 634,
+                "y": 416
+              },
+              "target": {
+                "x": 588,
+                "y": 508
+              },
+              "vertices": [
+                {
+                  "x": 575,
+                  "y": 406
+                },
+                {
+                  "x": 523,
+                  "y": 455
+                }
+              ],
+              "id": "a0a17660-a863-46b2-92a5-1dfe7ceb17f7",
+              "z": 72,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "x": 861,
+                "y": 177
+              },
+              "target": {
+                "x": 864,
+                "y": 256
+              },
+              "vertices": [
+                {
+                  "x": 805,
+                  "y": 227
+                }
+              ],
+              "id": "5489f5ca-b937-4d31-87cc-cd486eb555a9",
+              "z": 73,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 1085,
+                "y": 430
+              },
+              "angle": 0,
+              "id": "19aa15b9-20f9-45f3-a245-ff6ce3ec6e06",
+              "z": 74,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
+                "text": {
+                  "text": "Krypton.AuthN"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "19aa15b9-20f9-45f3-a245-ff6ce3ec6e06"
+              },
+              "target": {
+                "id": "d2ecfbe5-7be3-47c5-8dff-860b38b0b98b"
+              },
+              "vertices": [
+                {
+                  "x": 933,
+                  "y": 622
+                }
+              ],
+              "id": "8af7d3ab-76d6-4a66-a74f-2a4eced9ce60",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "User Removed Event",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 75,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "modelType": "STRIDE",
+                  "title": "Publishing this message removes all grants for a user",
+                  "type": "Denial of service",
+                  "description": "Publishing this messages through a compromised connection (credentials for the message queue, or other means), the system would effectively not be accessible to any user should every used be \"removed\".",
+                  "mitigation": "Mitigation dependent on other threat mitigations (see Message Queue, AWS Parameters).",
+                  "$$hashKey": "object:393"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "d2ecfbe5-7be3-47c5-8dff-860b38b0b98b"
+              },
+              "target": {
+                "id": "5f004968-1ad3-42d6-8f11-577173ce38da"
+              },
+              "vertices": [
+                {
+                  "x": 1004,
+                  "y": 499
+                }
+              ],
+              "id": "0ee3dad2-11e6-49ae-bb87-6f04a2be6e06",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.43723491869812725,
+                    "offset": 2.341822494887588
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "Subscribing to User\nRemoved Event",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 76,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "a6160e9a-90b8-47cb-bdae-de1771535eb5"
+              },
+              "target": {
+                "id": "5f004968-1ad3-42d6-8f11-577173ce38da"
+              },
+              "vertices": [
+                {
+                  "x": 750,
+                  "y": 147
+                },
+                {
+                  "x": 821,
+                  "y": 158
+                }
+              ],
+              "id": "a850df67-286a-4ce5-aadf-78f8e591e309",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Add activity to\nactivity group",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 77,
+              "hasOpenThreats": false,
+              "threats": [
+                {
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "modelType": "STRIDE",
+                  "type": "Elevation of privilege",
+                  "title": "A user can be granted too many permissions",
+                  "description": "An administrator will not know the operations of all of the activities immediately without training or extensive reading of each activity.",
+                  "mitigation": "Activities have descriptions (e.g. read the activity).\nThe administrators are trained on activities (on boarding and new activities).\nKnowledgable users are creating these activity groups.\nActivities are listed with other associated groups.",
+                  "$$hashKey": "object:439"
+                }
+              ],
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "size": {
+                "width": 10,
+                "height": 10
+              },
+              "smooth": true,
+              "source": {
+                "id": "d2ecfbe5-7be3-47c5-8dff-860b38b0b98b"
+              },
+              "target": {
+                "id": "0d9909ea-1398-4898-be81-cf1c808324dc"
+              },
+              "vertices": [
+                {
+                  "x": 349,
+                  "y": 421
+                }
+              ],
+              "id": "8b8769e4-e74d-40c7-b7a8-6c672d8e829f",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "Subscribing to User\nRemoved Event",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 78,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            }
+          ]
+        },
+        "size": {
+          "height": 980,
+          "width": 4005
+        },
+        "$$hashKey": "object:15",
+        "diagramType": "STRIDE"
+      }
+    ],
+    "reviewer": "Jane Smith"
+  }
+}

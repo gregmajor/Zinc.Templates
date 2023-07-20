@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Standard Code Analysis Rule Set for Tests" Description="This is the standard code analysis rule set for tests." ToolsVersion="16.0">
+  <Include Path="../codeanalysis.ruleset" Action="Default" />
+  <Rules AnalyzerId="Roslynator.CSharp.Analyzers" RuleNamespace="Roslynator.CSharp.Analyzers">
+    <Rule Id="RCS1194" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="CS1591" Action="None" />
+    <Rule Id="SA1005" Action="None" />
+    <Rule Id="SA1028" Action="None" />
+    <Rule Id="SA1202" Action="None" />
+    <Rule Id="SA1401" Action="None" />
+    <Rule Id="SA1402" Action="None" />
+    <Rule Id="SA1515" Action="None" />
+    <Rule Id="SA1615" Action="None" />
+    <Rule Id="SA1210" Action="None" />
+  </Rules>
+  <Rules AnalyzerId="SonarAnalyzer.CSharp" RuleNamespace="SonarAnalyzer.CSharp">
+    <Rule Id="S112" Action="Info" />
+  </Rules>
+  <Rules AnalyzerId="xunit.analyzers" RuleNamespace="xunit.analyzers">
+    <Rule Id="xUnit1004" Action="Info" />
+  </Rules>
+</RuleSet>
